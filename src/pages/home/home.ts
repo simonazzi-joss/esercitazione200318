@@ -42,8 +42,12 @@ export class HomePage {
         .then( data => {
           this.items = data;
           this.diagnostic += JSON.stringify( data );
+          l.dismiss();
         })
-        .catch( err => this.diagnostic += JSON.stringify( err ) );
+        .catch( err => {
+          this.diagnostic += JSON.stringify( err );
+          l.dismiss();
+        });
     /*
       this.data.getItems().subscribe( (x) => {
         this.items = x;
