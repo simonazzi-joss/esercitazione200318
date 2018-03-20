@@ -4,7 +4,6 @@ import { Item } from '../../models/item';
 import { DataFetcherProvider } from '../../providers/data-fetcher/data-fetcher';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-
 /**
  * Generated class for the ItemDetailPage page.
  *
@@ -44,7 +43,7 @@ export class ItemDetailPage {
         message: 'Lista aggiornata ' + JSON.stringify( x ),
         duration: 10000
       }).present();
-  
+
       this.navCtrl.pop();
       // success
     }).catch( (err) => {
@@ -69,14 +68,14 @@ export class ItemDetailPage {
     }
 
     objLoader.present();
-    
+
     this.camera.getPicture(options).then((imageData) => {
       // non sono completamente sicuro che mi restituisca sempre una stringa data
       this.item.pic = 'data:image/jpeg;base64,' + imageData;
       objLoader.dismiss();
     }, (err) => {
       objLoader.dismiss();
-      
+
       this.toast.create({
         message: 'Errore: ' + err,
         duration: 2000

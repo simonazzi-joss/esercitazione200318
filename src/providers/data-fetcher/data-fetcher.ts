@@ -19,24 +19,35 @@ export class DataFetcherProvider {
                 // only for testing
               private toast: ToastController) {
     this.items = [
-      {id: 99, what: 'Righello', toWho: 'Maria', when: '', pic: undefined, isReturned: false},
-      {id: 98, what: 'Gomma', toWho: 'Maria', when: '', pic: undefined, isReturned: false},
-      {id: 97, what: 'temperino', toWho: 'Maria', when: '', pic: undefined, isReturned: true},
+    //  {id: 99, what: 'Righello', toWho: 'Maria', when: '', pic: undefined, isReturned: false},
+    //  {id: 98, what: 'Gomma', toWho: 'Maria', when: '', pic: undefined, isReturned: false},
+    //  {id: 97, what: 'temperino', toWho: 'Maria', when: '', pic: undefined, isReturned: true},
     ];
   }
 
-  getItems(): Observable<Item[]> {
-    this.storage.getItem('items')
-      .then( data => {
-        this.items = data;
+  getItemsPromise() {
+    return this.storage.getItem('items');
+  }
 
-          // only for testing
+  getItems(): Observable<Item[]> {
+    this.getItemsPromise()
+      .then( data => {
+      //  this.items.slice(0, this.items.length);
+        data.array.forEach(element => this.items.push( element ));
+
+        // only for testing
         this.toast.create({
           message: JSON.stringify(data),
           duration: 10000
         }).present();
       })
       .catch( err => {
+
+        //only for teasting
+        this.toast.create({
+          message: JSON.stringify(err),
+          duration: 10000
+        }).present();
         //la lista è vuota, oppure è ios che non installa i plug-in
       });
 
