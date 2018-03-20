@@ -1,0 +1,16 @@
+page-item-detail {
+
+    .pic {
+        background-color: whitesmoke;
+        border: 1px solid blueviolet;
+        width: 100%;
+    }
+    .center {
+        text-align: center;
+        cursor: pointer;
+
+        ion-icon {
+            margin: 10px;
+        }
+    }
+}
