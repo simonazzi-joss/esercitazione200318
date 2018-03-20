@@ -20,17 +20,21 @@
 <ion-content padding>
   <ion-list>
     <button ion-item detail-push *ngFor="let itm of items" (click)="showDetails(itm)">
-      <div class="pic">
-        <img *ngIf="itm.pic" src="{{itm.pic}}" />
-      </div>
-      <div class="detail">
-        <div class="main">
-          {{itm.what}}
-        </div>
-        <div class="sub">
-          A chi: {{itm.toWho}} | Quando: {{itm.when}}
-        </div>
-      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-3>
+            <img *ngIf="itm.pic" src="{{itm.pic}}" />
+          </ion-col>
+          <ion-col col-9 class="detail">
+            <div class="main">
+              {{itm.what}}
+            </div>
+            <div class="sub">
+              Quando: {{itm.when}}
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </button>
   </ion-list>
 </ion-content>

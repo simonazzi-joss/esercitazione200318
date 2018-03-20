@@ -1,29 +1,22 @@
 page-home {
     button {
-        display: flex;
-        flex-direction: row;
-        .pic {
-            width: 10%;
-            height: 100%;
-
-            img {
-                min-width: 100%;
-                min-height: 100%;
-            }
+        img {
+            min-width: 100%;
+            min-height: 100%;
         }
         .detail {
-            flex-grow: 1;
-
             .main {
                 width: 100%;
                 height: 70%;
                 font-weight: bold;
+                font-size: 1.3em;
             }
             
             .sub {
                 width: 100%;
                 height: 30%;
                 color: silver;
+                font-size: 0.7em;
             }
         }
     }

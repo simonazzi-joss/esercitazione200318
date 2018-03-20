@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ItemDetailPage } from '../pages/item-detail/item-detail';
 import { DataFetcherProvider } from '../providers/data-fetcher/data-fetcher';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DataFetcherProvider } from '../providers/data-fetcher/data-fetcher';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataFetcherProvider
+    DataFetcherProvider,
+    Camera
   ]
 })
 export class AppModule {}

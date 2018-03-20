@@ -32,11 +32,13 @@
   
     <!-- button era preferibile ma interferiva con il submit della form -->
     <div class="pic center" (click)="takePicture()">
-      <ion-icon *ngIf="! item.pic" name="add"></ion-icon>
+      <ion-icon *ngIf="! item.pic" name="add-circle-outline"></ion-icon>
       
       <img *ngIf="item.pic" src="{{item.pic}}" alt="..." />
     </div>
     
     <button ion-button block type="submit">Salva</button>
+
+    {{diagnostic}}
   </form>
 </ion-content>
