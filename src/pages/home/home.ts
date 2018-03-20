@@ -18,23 +18,26 @@ import { DataFetcherProvider } from '../../providers/data-fetcher/data-fetcher';
 })
 export class HomePage {
   items: Item[];
+  diagnostic: string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private data: DataFetcherProvider) {
     this.items = [];
+    this.diagnostic = '';
   }
 
   ionViewDidLoad() {
-    // load item from the storage
-    this.loadData();
+    setTimeout(() => {
+      this.loadData();
+    }, 3000);
   }
 
   loadData() {
-    // ho usato x per definire l'oggetto che ricevo per evitare variabili con lo stesso nome
-    // alternativa
-    // (items) => this.items = items
-    this.data.getItems().subscribe( (x) => this.items = x );
+    this.data.getItems().subscribe( (x) => {
+      this.items = x;
+    //  this.diagnostic += JSON.stringify(x);
+    } );
   }
 
   showDetails(itm: Item) {

@@ -6,14 +6,20 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>itemDetail</ion-title>
+    <ion-title>Dettaglio</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+  <ion-label *ngIf="item.isReturned">
+    <ion-icon name="alert"></ion-icon>
+    L'oggetto è stato restituito
+  </ion-label>
+
   <form (ngSubmit)="saveItem()">
     <ion-list>
+
       <ion-item>
         <ion-label color="primary" stacked>Nome dell'oggetto</ion-label>
         <ion-input type="text" placeholder="Cosa?" name="what" [(ngModel)]="item.what"></ion-input>
@@ -26,18 +32,20 @@
 
       <ion-item>
         <ion-label color="primary" stacked>Quando lo hai prestato</ion-label>
-        <ion-input type="text" placeholder="Quando?" name="when" [(ngModel)]="item.when"></ion-input>
+        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Quando?" name="when" [(ngModel)]="item.when"></ion-datetime>
       </ion-item>
+
+      <ion-input type="hidden" name="returned" [(ngModel)]="item.isReturned"></ion-input>
     </ion-list>
   
     <!-- button era preferibile ma interferiva con il submit della form -->
     <div class="pic center" (click)="takePicture()">
-      <ion-icon *ngIf="! item.pic" name="add-circle-outline"></ion-icon>
+      <ion-icon *ngIf="! item.pic" name="add"></ion-icon>
       
       <img *ngIf="item.pic" src="{{item.pic}}" alt="..." />
     </div>
     
-    <button ion-button block type="submit">Salva</button>
+    <button ion-button block type="submit" [disabled]="item.isReturned">Salva</button>
 
     {{diagnostic}}
   </form>

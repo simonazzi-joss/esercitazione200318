@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Item } from '../../models/item';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { ToastController } from 'ionic-angular';
 
 /*
   Generated class for the DataFetcherProvider provider.
@@ -11,23 +13,39 @@ import { of } from 'rxjs/observable/of';
 */
 @Injectable()
 export class DataFetcherProvider {
-  private items: Item[];
+  items: Item[];
 
-  constructor() {
-    this.items = [];
-    this.items.push( { id: 1, what: 'righello', toWho: 'maria', when: 'yesterday', pic: undefined } );
-    this.items.push( { id: 2, what: 'temperino', toWho: 'maria', when: 'now', pic: undefined } );
+  constructor(private storage: NativeStorage,
+                // only for testing
+              private toast: ToastController) {
+    this.items = [
+      {id: 99, what: 'Righello', toWho: 'Maria', when: '', pic: undefined, isReturned: false},
+      {id: 98, what: 'Gomma', toWho: 'Maria', when: '', pic: undefined, isReturned: false},
+      {id: 97, what: 'temperino', toWho: 'Maria', when: '', pic: undefined, isReturned: true},
+    ];
   }
 
   getItems(): Observable<Item[]> {
+    this.storage.getItem('items')
+      .then( data => {
+        this.items = data;
+
+          // only for testing
+        this.toast.create({
+          message: JSON.stringify(data),
+          duration: 10000
+        }).present();
+      })
+      .catch( err => {
+        //la lista è vuota, oppure è ios che non installa i plug-in
+      });
+
     return of( this.items );
   }
 
   addItem(itm: Item) {
-    console.log(itm);
-    if(itm.id === 0) {
+    if( !itm.id ) {
       // Ho bisogno di un id unico per questo item, quindi prendo l'ultimo id e gli aggiungo 1
-
       this.items.forEach( (x) => {
         if(x.id > itm.id) {
           itm.id = x.id;
@@ -43,6 +61,8 @@ export class DataFetcherProvider {
 
       this.items[idToUpdate] = itm;
     }
+
     // salvataggio sul local storage
+    return this.storage.setItem('items', this.items);
   }
 }

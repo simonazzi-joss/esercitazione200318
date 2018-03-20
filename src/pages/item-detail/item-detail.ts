@@ -32,18 +32,35 @@ export class ItemDetailPage {
   ionViewDidLoad() { }
 
   saveItem() {
-    this.data.addItem(this.item);
+    const idL = this.loader.create( {
+      content: 'Salvataggio'
+    })
 
-    this.toast.create({
-      message: 'Lista aggiornata',
-      duration: 1000
-    }).present();
+    // il metodo addItem ritorna una promise chd implemento qui sotto
+    this.data.addItem(this.item).then( ( x ) => {
+      idL.dismiss();
 
-    this.navCtrl.pop();
+      this.toast.create({
+        message: 'Lista aggiornata ' + JSON.stringify( x ),
+        duration: 10000
+      }).present();
+  
+      this.navCtrl.pop();
+      // success
+    }).catch( (err) => {
+      idL.dismiss();
+
+      this.toast.create({
+        message: 'Error: ' + err,
+        duration: 1000
+      }).present();
+    });
   }
 
   takePicture() {
-    const objLoader = this.loader.create({ content: 'Caricamento...' });
+    const objLoader = this.loader.create({
+      content: 'Caricamento...'
+    });
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,

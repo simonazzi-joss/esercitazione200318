@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { ItemDetailPage } from '../pages/item-detail/item-detail';
 import { DataFetcherProvider } from '../providers/data-fetcher/data-fetcher';
 import { Camera } from '@ionic-native/camera';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { Camera } from '@ionic-native/camera';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataFetcherProvider,
-    Camera
+    Camera,
+    NativeStorage
   ]
 })
 export class AppModule {}

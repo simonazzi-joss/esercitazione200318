@@ -18,6 +18,7 @@
 
 
 <ion-content padding>
+  {{diagnostic}}
   <ion-list>
     <button ion-item detail-push *ngFor="let itm of items" (click)="showDetails(itm)">
       <ion-grid>
@@ -26,12 +27,10 @@
             <img *ngIf="itm.pic" src="{{itm.pic}}" />
           </ion-col>
           <ion-col col-9 class="detail">
-            <div class="main">
-              {{itm.what}}
-            </div>
-            <div class="sub">
-              Quando: {{itm.when}}
-            </div>
+            <div class="main">{{itm.what}}</div>
+
+            <div *ngIf="!itm.isReturned" class="sub">Quando: {{itm.when}}</div>
+            <div *ngIf="itm.isReturned" class="sub">L'oggetto è stato restituito</div>
           </ion-col>
         </ion-row>
       </ion-grid>

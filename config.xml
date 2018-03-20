@@ -81,7 +81,12 @@
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="cordova-plugin-camera" spec="^4.0.2" />
-    <engine name="ios" spec="~4.5.4" />
     <allow-navigation href="http://192.168.24.99:8100" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.2">
+        <variable name="CAMERA_USAGE_DESCRIPTION" value="adding photo to my app" />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Adding photo to my app" />
+    </plugin>
+    <plugin name="cordova-plugin-nativestorage" spec="^2.3.1" />
+    <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="7.0.0" />
 </widget>

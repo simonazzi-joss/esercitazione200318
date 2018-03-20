@@ -4,8 +4,9 @@ export class Item {
     what: string;
     toWho: string;
     when: string;
+    isReturned: boolean;
 
     constructor() {
-
+        this.isReturned = false;
     }
 }
