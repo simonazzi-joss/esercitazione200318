@@ -22,10 +22,10 @@ export class HomePage {
 	diagnostic: string;
 
 	constructor(public navCtrl: NavController,
-							public navParams: NavParams,
-							private data: DataFetcherProvider,
-							private loader: LoadingController,
-							private plat: Platform) {
+				public navParams: NavParams,
+				private data: DataFetcherProvider,
+				private loader: LoadingController,
+				private plat: Platform) {
 		this.items = [];
 		this.diagnostic = '';
 	}
@@ -76,5 +76,11 @@ export class HomePage {
 	}
 	closeBtnSlider(slider: ItemSliding) {
 		slider.close();
+	}
+	openBtnSlid(slider: ItemSliding) {
+		// reproduce the slide on the click
+        slider.setElementClass("active-sliding", true);
+        slider.setElementClass("active-slide", true);
+        slider.setElementClass("active-options-right", true);
 	}
 }

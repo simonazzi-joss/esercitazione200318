@@ -11,6 +11,7 @@ import { DataFetcherProvider } from '../providers/data-fetcher/data-fetcher';
 import { Camera } from '@ionic-native/camera';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { CameraProvider } from '../providers/camera/camera';
+import { FormBuilder } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CameraProvider } from '../providers/camera/camera';
     DataFetcherProvider,
     Camera,
     NativeStorage,
-    CameraProvider
+    CameraProvider,
+    FormBuilder
   ]
 })
 export class AppModule {}

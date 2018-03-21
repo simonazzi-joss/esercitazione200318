@@ -21,11 +21,11 @@ export class ItemDetailPage {
 	diagnostic: string;
 
 	constructor(public navCtrl: NavController,
-							public navParams: NavParams,
-							public toast: ToastController,
-							private data: DataFetcherProvider,
-							private camera: CameraProvider,
-							private loader: LoadingController) {
+				public navParams: NavParams,
+				public toast: ToastController,
+				private data: DataFetcherProvider,
+				private camera: CameraProvider,
+				private loader: LoadingController ) {
 		this.item = this.navParams.get('itemToShow') || new Item();
 
 		this.diagnostic = '';
@@ -65,7 +65,7 @@ export class ItemDetailPage {
 			this.item.pic = 'data:image/jpeg;base64,' + img;
 		//	img = img.replace( 'assets-library:/', '');
 		//	this.item.pic = img;
-			this.diagnostic = JSON.stringify( img );
+		//	this.diagnostic = img;
 			objLoader.dismiss();
 		}, err => {
 			objLoader.dismiss();

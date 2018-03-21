@@ -17,22 +17,22 @@
     L'oggetto è stato restituito
   </ion-label>
 
-  <form (ngSubmit)="saveItem()">
+  <form (ngSubmit)="saveItem()" #form>
     <ion-list>
 
       <ion-item>
         <ion-label color="primary" stacked>Nome dell'oggetto</ion-label>
-        <ion-input type="text" placeholder="Cosa?" name="what" [(ngModel)]="item.what"></ion-input>
+        <ion-input type="text" placeholder="Cosa?" name="what" [(ngModel)]="item.what" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label color="primary" stacked>A chi lo hai prestato</ion-label>
-        <ion-input type="text" placeholder="A chi?" name="who" [(ngModel)]="item.toWho"></ion-input>
+        <ion-input type="text" placeholder="A chi?" name="who" [(ngModel)]="item.toWho" required></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label color="primary" stacked>Quando lo hai prestato</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Quando?" name="when" [(ngModel)]="item.when"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Quando?" name="when" [(ngModel)]="item.when" required></ion-datetime>
       </ion-item>
 
       <ion-input type="hidden" name="returned" [(ngModel)]="item.isReturned"></ion-input>
@@ -45,8 +45,6 @@
       <img *ngIf="item.pic" src="{{item.pic}}" alt="..." />
     </div>
     
-    <button ion-button block type="submit" [disabled]="item.isReturned">Salva</button>
-
-    {{diagnostic}}
+    <button ion-button block type="submit" [disabled]="item.isReturned && !form.valid">Salva</button>
   </form>
 </ion-content>
