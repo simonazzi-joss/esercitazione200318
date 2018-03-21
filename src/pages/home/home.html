@@ -5,35 +5,37 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+	<ion-navbar>
+		<ion-title>Home</ion-title>
 
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="showDetails(null)">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+		<ion-buttons end>
+			<button ion-button icon-only (click)="showDetails(null)">
+				<ion-icon name="add"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  {{diagnostic}}
-  <ion-list>
-    <button ion-item detail-push *ngFor="let itm of items" (click)="showDetails(itm)">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-3>
-            <img *ngIf="itm.pic" src="{{itm.pic}}" />
-          </ion-col>
-          <ion-col col-9 class="detail">
-            <div class="main">{{itm.what}}</div>
+	{{diagnostic}}
+	<ion-list>
+		<button ion-item detail-push *ngFor="let itm of items" (click)="showDetails(itm)">
+			<ion-grid>
+				<ion-row>
+					<ion-col col-3>
+						<img *ngIf="itm.pic" src="{{itm.pic}}" />
+					</ion-col>
+					<ion-col col-9 class="detail">
+						<div class="main">{{itm.what}}</div>
 
-            <div *ngIf="!itm.isReturned" class="sub">Quando: {{itm.when}}</div>
-            <div *ngIf="itm.isReturned" class="sub">L'oggetto è stato restituito</div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </button>
-  </ion-list>
+						<div *ngIf="!itm.isReturned" class="sub">Quando: {{itm.when}}</div>
+						<div *ngIf="itm.isReturned" class="sub">L'oggetto è stato restituito</div>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</button>
+	</ion-list>
+
+	<ion-label class="info" *ngIf="items.length === 0">Non c'è nulla da mostrare</ion-label>
 </ion-content>

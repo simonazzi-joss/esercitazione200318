@@ -10,6 +10,7 @@ import { ItemDetailPage } from '../pages/item-detail/item-detail';
 import { DataFetcherProvider } from '../providers/data-fetcher/data-fetcher';
 import { Camera } from '@ionic-native/camera';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { CameraProvider } from '../providers/camera/camera';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataFetcherProvider,
     Camera,
-    NativeStorage
+    NativeStorage,
+    CameraProvider
   ]
 })
 export class AppModule {}

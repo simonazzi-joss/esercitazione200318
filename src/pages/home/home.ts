@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { Item } from '../../models/item';
 import { ItemDetailPage } from '../item-detail/item-detail';
 import { DataFetcherProvider } from '../../providers/data-fetcher/data-fetcher';
+import { Platform } from 'ionic-angular';
 
 /**
  * Generated class for the HomePage page.
@@ -13,54 +14,50 @@ import { DataFetcherProvider } from '../../providers/data-fetcher/data-fetcher';
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
+	selector: 'page-home',
+	templateUrl: 'home.html',
 })
 export class HomePage {
-  items: Item[];
-  diagnostic: string;
+	items: Item[];
+	diagnostic: string;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private data: DataFetcherProvider,
-              private loader: LoadingController) {
-    this.items = [];
-    this.diagnostic = '';
-  }
+	constructor(public navCtrl: NavController,
+							public navParams: NavParams,
+							private data: DataFetcherProvider,
+							private loader: LoadingController,
+							private plat: Platform) {
+		this.items = [];
+		this.diagnostic = '';
+	}
 
-  ionViewDidLoad() {
-    this.loadData();
-  }
+	ionViewDidLoad() {
+		this.loadData();
+	}
 
-  loadData() {
-    const l = this.loader.create({
-      content: 'Loading...'
-    });
-    l.present();
-    setTimeout(() => {
-      this.data.getItemsPromise()
-        .then( data => {
-          this.items = data;
-          this.diagnostic += JSON.stringify( data );
-          l.dismiss();
-        })
-        .catch( err => {
-          this.diagnostic += JSON.stringify( err );
-          l.dismiss();
-        });
-    /*
-      this.data.getItems().subscribe( (x) => {
-        this.items = x;
-        this.diagnostic += JSON.stringify(x);
-        l.dismiss();
-      });
-    */
-    }, 5000);
-  }
+	loadData() {
+		const l = this.loader.create({
+			content: 'Caricamento ...'
+		});
+		l.present();
 
-  showDetails(itm: Item) {
-    // in caso itm dovesse essere null, la pagine item-detail si organizza
-    // per la creazione di un nuovo oggetto item
-    this.navCtrl.push(ItemDetailPage, { itemToShow: itm });
-  }
+	//  attende che tutti i plugin siano caricati
+		this.plat.ready().then( () => {
+			this.data.getItems().subscribe( x => {
+				this.items = x;
+			//	this.diagnostic += 's' + JSON.stringify( x );
+				l.dismiss();
+			},
+			err => {
+			//  no data fund
+				l.dismiss();
+			//	this.diagnostic += JSON.stringify( err );
+			});
+		});
+	}
+
+	showDetails(itm: Item) {
+		// in caso itm dovesse essere null, la pagine item-detail si organizza
+		// per la creazione di un nuovo oggetto item
+		this.navCtrl.push(ItemDetailPage, { itemToShow: itm });
+	}
 }

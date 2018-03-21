@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { Item } from '../../models/item';
 import { DataFetcherProvider } from '../../providers/data-fetcher/data-fetcher';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { CameraProvider } from '../../providers/camera/camera';
 
 /**
  * Generated class for the ItemDetailPage page.
@@ -13,73 +13,67 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
-  selector: 'page-item-detail',
-  templateUrl: 'item-detail.html',
+	selector: 'page-item-detail',
+	templateUrl: 'item-detail.html',
 })
 export class ItemDetailPage {
-  item: Item;
+	item: Item;
+	diagnostic: string;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public toast: ToastController,
-              private data: DataFetcherProvider,
-              private camera: Camera,
-              private loader: LoadingController) {
-    this.item = this.navParams.get('itemToShow') || new Item();
-  }
+	constructor(public navCtrl: NavController,
+							public navParams: NavParams,
+							public toast: ToastController,
+							private data: DataFetcherProvider,
+							private camera: CameraProvider,
+							private loader: LoadingController) {
+		this.item = this.navParams.get('itemToShow') || new Item();
 
-  ionViewDidLoad() { }
+		this.diagnostic = '';
+	}
 
-  saveItem() {
-    const idL = this.loader.create( {
-      content: 'Salvataggio'
-    })
+	ionViewDidLoad() { }
 
-    // il metodo addItem ritorna una promise chd implemento qui sotto
-    this.data.addItem(this.item).then( ( x ) => {
-      idL.dismiss();
+	saveItem() {
+		const idL = this.loader.create( {
+			content: 'Salvataggio'
+		})
 
-      this.toast.create({
-        message: 'Lista aggiornata ' + JSON.stringify( x ),
-        duration: 10000
-      }).present();
+	//	il metodo addItem ritorna una promise chd implemento qui sotto
+		this.data.addItem(this.item).subscribe( ( x ) => {
+			this.toast.create({
+				message: 'Lista aggiornata',
+				duration: 2000
+			}).present();
+			this.navCtrl.pop();
+		},  err => {
+			idL.dismiss();
 
-      this.navCtrl.pop();
-      // success
-    }).catch( (err) => {
-      idL.dismiss();
+			this.toast.create({
+				message: 'Errore: ' + err,
+				duration: 1000
+			}).present();
+		});
+	}
 
-      this.toast.create({
-        message: 'Error: ' + err,
-        duration: 1000
-      }).present();
-    });
-  }
+	takePicture() {
+		const objLoader = this.loader.create({
+			content: 'Caricamento...'
+		});
 
-  takePicture() {
-    const objLoader = this.loader.create({
-      content: 'Caricamento...'
-    });
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      mediaType: this.camera.MediaType.PICTURE
-    }
+		objLoader.present();
 
-    objLoader.present();
+		this.camera.getPicture().subscribe( img => {
+		//	this.item.pic = 'data:image/jpeg;base64,' + img;
+			this.item.pic = img;
+			this.diagnostic = img;
+			objLoader.dismiss();
+		}, err => {
+			objLoader.dismiss();
 
-    this.camera.getPicture(options).then((imageData) => {
-      // non sono completamente sicuro che mi restituisca sempre una stringa data
-      this.item.pic = 'data:image/jpeg;base64,' + imageData;
-      objLoader.dismiss();
-    }, (err) => {
-      objLoader.dismiss();
-
-      this.toast.create({
-        message: 'Errore: ' + err,
-        duration: 2000
-      }).present();
-    });
-  }
+			this.toast.create({
+				message: 'Errore: ' + err,
+				duration: 2000
+			}).present();
+		});
+	}
 }
