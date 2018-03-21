@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ItemSliding } from 'ionic-angular';
 import { Item } from '../../models/item';
 import { ItemDetailPage } from '../item-detail/item-detail';
 import { DataFetcherProvider } from '../../providers/data-fetcher/data-fetcher';
@@ -59,5 +59,22 @@ export class HomePage {
 		// in caso itm dovesse essere null, la pagine item-detail si organizza
 		// per la creazione di un nuovo oggetto item
 		this.navCtrl.push(ItemDetailPage, { itemToShow: itm });
+	}
+	returnItem(itm: Item) {
+		const objLoader = this.loader.create({
+			content: "Scrittura in corso"
+		});
+		objLoader.present();
+
+		itm.isReturned = true;
+
+		this.data.addItem(itm).subscribe( () => {
+			objLoader.dismiss();
+		}, err => {
+			objLoader.dismiss();
+		});
+	}
+	closeBtnSlider(slider: ItemSliding) {
+		slider.close();
 	}
 }

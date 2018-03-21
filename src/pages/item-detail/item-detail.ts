@@ -36,9 +36,8 @@ export class ItemDetailPage {
 	saveItem() {
 		const idL = this.loader.create( {
 			content: 'Salvataggio'
-		})
+		});
 
-	//	il metodo addItem ritorna una promise chd implemento qui sotto
 		this.data.addItem(this.item).subscribe( ( x ) => {
 			this.toast.create({
 				message: 'Lista aggiornata',
@@ -63,9 +62,10 @@ export class ItemDetailPage {
 		objLoader.present();
 
 		this.camera.getPicture().subscribe( img => {
-		//	this.item.pic = 'data:image/jpeg;base64,' + img;
-			this.item.pic = img;
-			this.diagnostic = img;
+			this.item.pic = 'data:image/jpeg;base64,' + img;
+		//	img = img.replace( 'assets-library:/', '');
+		//	this.item.pic = img;
+			this.diagnostic = JSON.stringify( img );
 			objLoader.dismiss();
 		}, err => {
 			objLoader.dismiss();

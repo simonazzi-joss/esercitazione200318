@@ -16,9 +16,9 @@ export class CameraProvider {
 	constructor(private camera: Camera) {
 		this.camOpt = {
 			quality: 100,
-		//	destinationType: this.camera.DestinationType.DATA_URL,
+			destinationType: this.camera.DestinationType.DATA_URL,
 		//	destinationType: this.camera.DestinationType.FILE_URI,
-			destinationType: this.camera.DestinationType.NATIVE_URI,	
+		//	destinationType: this.camera.DestinationType.NATIVE_URI,
 			sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
 			mediaType: this.camera.MediaType.PICTURE
 		};
