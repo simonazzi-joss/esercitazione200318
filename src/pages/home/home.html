@@ -16,14 +16,14 @@
 	</ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
 	<ion-title>Lista degli oggetti prestati</ion-title>
+	{{diagnostic}}
 	<ion-grid>
 		<ion-list>
 			<ion-item-sliding #sldItm *ngFor="let itm of items">
 				<ion-item>
-					<ion-row>
+					<ion-row [ngClass]="{ returned: itm.isReturned }">
 						<ion-col col-3>
 							<img class="pic" *ngIf="itm.pic" src="{{itm.pic}}" />
 						</ion-col>
@@ -35,7 +35,6 @@
 						</ion-col>
 					</ion-row>
 				</ion-item>
-				
 				<ion-item-options side="right">
 					<button ion-button color="light" (click)="returnItem(itm);closeBtnSlider(sldItm);">Ritornato</button>
 					<button ion-button color="secondary" (click)="showDetails(itm);closeBtnSlider(sldItm);">Dettagli</button>
